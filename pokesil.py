@@ -51,9 +51,9 @@ try:
             self.tipo = self.api_poke_json["types"][0]["type"]["name"]
             print(self.tipo)
         
-        def genero(self):
-            self.genero = self.api_poke_json[""]
-            print(self.genero)
+        #def genero(self):
+            #self.genero = self.api_poke_json[""]
+            #print(self.genero)
 
 
 except  Exception as error:
