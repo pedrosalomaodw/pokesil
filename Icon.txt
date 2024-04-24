@@ -1,7 +1,0 @@
-PPPPPPP      OOOOO     K     K       EEEEEEEEEE     SSSSSSSSS      IIIIIII     L
-P      P    O     O    K    K        E              S                 I        L
-P      P    O     O    K   K         E              S                 I        L
-PPPPPPP     O     O    KKKK          EEEEEEEEEE     SSSSSSSSS         I        L
-P           O     O    K   K         E                       S        I        L
-P           O     O    K    K        E                       S        I        L
-P            OOOOO     K     K       EEEEEEEEEE     SSSSSSSSSS     IIIIIII     LLLLLLLL
