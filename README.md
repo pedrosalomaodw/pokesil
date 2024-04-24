@@ -9,11 +9,11 @@
 
 <p>Mais atualizações vem por aí! Esta é a versão 1..0.1, mostrando os principais dados de cada Pokémon.</p>
 
-# Próxima atualização 
+## Próxima atualização 
 
 Na próxima atualização devo incrementar sobre as evoluções e mais dados importantes sobre os Pokémons
 
-# Como utilizar?
+## Como utilizar?
 
 ````py
 import pokesil
@@ -27,5 +27,17 @@ pokemon = nome_pokemon.habilidades()
 ......nome_pokemon.tipo()
 
 ````
+
+## Instalando
+
+Instalando via Git
+
+````bash
+git clone https://github.com/pedrosalomaodw/pokesil
+````
+
+
+
+
 
 
