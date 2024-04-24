@@ -1,64 +1,78 @@
+import os
 import requests
 
-"""
-versão: 1.0.1
-perfil Facebook: Pedro Josué Salomão DW
+class PokeDados:
 
+    def __init__(self, nome_pokemon):
+        self.nome_pokemon = nome_pokemon
+        self.api_poke = requests.get(f"https://pokeapi.co/api/v2/pokemon/{self.nome_pokemon}")
+        self.api_poke_json = self.api_poke.json()
 
-"""
+    def habilidades(self):
+        for x in range(len(self.api_poke_json["abilities"])):
+            habilidade = self.api_poke_json["abilities"][x]["ability"]["name"]
+            print(habilidade)
+    
+    def altura(self):
+        altura = self.api_poke_json["height"]
+        print(altura)
 
-"""parametros que precisam ter:
-evoluções, imagem,  genero"""
+    def peso(self):
+        peso = self.api_poke_json["weight"]
+        print(float(peso))
+    
+    def id_pokemon(self):
+        id_pokemon = self.api_poke_json["id"]
+        print(id_pokemon)
+        return id_pokemon
 
-"""evolucoes 
-    https://pokeapi.co/api/v2/evolution-chain/{id}/
-    """
+    def tipo(self):
+        tipo = self.api_poke_json["types"][0]["type"]["name"]
+        print(tipo)
 
+    def salvar_info_arquivo(self):
+        nome_arquivo = f"{self.nome_pokemon.lower()}.txt"
+        with open(nome_arquivo, "w") as arquivo:
+            arquivo.write(f"Nome do Pokémon: {self.nome_pokemon}\n")
+            arquivo.write("Habilidades:\n")
+            for x in range(len(self.api_poke_json["abilities"])):
+                habilidade = self.api_poke_json["abilities"][x]["ability"]["name"]
+                arquivo.write(f"- {habilidade}\n")
+            arquivo.write(f"Altura: {self.api_poke_json['height']}\n")
+            arquivo.write(f"Peso: {self.api_poke_json['weight']}\n")
+            arquivo.write(f"ID do Pokémon: {self.api_poke_json['id']}\n")
+            arquivo.write(f"Tipo: {self.api_poke_json['types'][0]['type']['name']}\n")
+
+def reiniciar_programa():
+    reiniciar = input("Deseja reiniciar o programa? (S/s para sim, outro para não): ").lower()
+    return reiniciar == 's'
 
 try:
-    class PokeDados():
+    os.system('cls' if os.name == 'nt' else 'clear')  # Limpa a tela do console
+# Define a cor verde para o texto
+print("\033[1;32;40mPPPPPPP      OOOOO     K     K       EEEEEEEEEE     SSSSSSSSS      IIIIIII     L")
+print("P      P    O     O    K    K        E              S                 I        L")
+print("P      P    O     O    K   K         E              S                 I        L")
+print("PPPPPPP     O     O    KKKK          EEEEEEEEEE     SSSSSSSSS         I        L")
+print("P           O     O    K   K         E                       S        I        L")
+print("P           O     O    K    K        E                       S        I        L")
+print("P            OOOOO     K     K       EEEEEEEEEE     SSSSSSSSSS     IIIIIII     LLLLLLLL")
+# Restaura a cor padrão do texto
+print("\033[0;37;40m")
+    print("\nPokeSil: https://github.com/pedrosalomaodw/pokesil/")
 
-        def __init__(self, nome_pokemon):
+    while True:
+        nome_pokemon = input("\nDigite o nome do Pokémon: ")
+        pokemon = PokeDados(nome_pokemon)
+        pokemon.habilidades()
+        pokemon.altura()
+        pokemon.peso()
+        pokemon.id_pokemon()
+        pokemon.tipo()
+        pokemon.salvar_info_arquivo()
+        if not reiniciar_programa():
+            break
 
-            self.nome_pokemon = nome_pokemon
-            api_poke = requests.get(f"https://pokeapi.co/api/v2/pokemon/{self.nome_pokemon}")
-
-            self.api_poke_json = api_poke.json()
-
-        def habilidades(self):
-            for x in range(0,1+1):
-                self.habilidades_pokemon = self.api_poke_json["abilities"][x]["ability"]["name"]
-                print(self.habilidades_pokemon)
-            
-        def altura(self):
-            self.altura = self.api_poke_json["height"]
-            print(self.altura)
-
-        def peso(self):
-            self.peso = self.api_poke_json["weight"]
-            print(float(self.peso))
+except Exception as error:
+    print("Ocorreu um erro:", error)
         
-        def id_pokemon(self):
-            self.id_pokemon = self.api_poke_json["id"]
-            global id_pokemon_funcao
-            id_pokemon_funcao = self.id_pokemon
-
-            print(self.id_pokemon)
-            return id_pokemon_funcao
-
-        
-        def tipo(self):
-            self.tipo = self.api_poke_json["types"][0]["type"]["name"]
-            print(self.tipo)
-        
-        #def genero(self):
-            #self.genero = self.api_poke_json[""]
-            #print(self.genero)
-
-
-except  Exception as error:
-    print("está dando erro no:", error)
-
-
-
-
