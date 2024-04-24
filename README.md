@@ -9,34 +9,56 @@
 
 <p>Mais atualizações vem por aí! Esta é a versão 1..0.1, mostrando os principais dados de cada Pokémon.</p>
 
-## Próxima atualização 
+# Pokesil Info
 
-Na próxima atualização devo incrementar sobre as evoluções e mais dados importantes sobre os Pokémons
+Este é um programa Python que utiliza a PokeAPI para fornecer informações sobre Pokémon. Ele permite que os usuários insiram o nome de um Pokémon e obtenham detalhes como habilidades, altura, peso, ID e tipo.
 
-## Como utilizar?
+## Como Funciona
 
-````py
-import pokesil
+O programa utiliza a PokeAPI para fazer uma solicitação ao servidor da API com o nome do Pokémon inserido pelo usuário. Em seguida, ele extrai informações relevantes do JSON retornado pela API e as exibe na tela.
 
+Além disso, o programa oferece a opção de salvar as informações do Pokémon em um arquivo de texto com o nome do Pokémon.
 
-nome_pokemon = pokesil.PokeDados("charmander")
-pokemon = nome_pokemon.habilidades()
-......nome_pokemon.id_pokemon()
-......nome_pokemon.altura()
-......nome_pokemon.peso()
-......nome_pokemon.tipo()
+## Como Executar
 
-````
+Para executar este programa, siga estas etapas:
 
-## Instalando
+1. Clone o repositório:
 
-Instalando via Git
+    ```bash
+    git clone https://github.com/pedrosalomaodw/pokesil.git
+    ```
 
-````bash
-git clone https://github.com/pedrosalomaodw/pokesil
-````
+2. Navegue até o diretório do projeto:
 
+    ```bash
+    cd pokesil
+    ```
 
+3. Certifique-se de ter o Python instalado em seu sistema. Você pode baixá-lo em [python.org](https://www.python.org/).
+
+4. Instale as dependências necessárias usando o pip (gerenciador de pacotes do Python):
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+5. Execute o programa:
+
+    ```bash
+    python pokesil.py
+    ```
+
+6. Siga as instruções exibidas na tela para inserir o nome do Pokémon e visualizar suas informações.
+
+## Requisitos
+
+- Python 3.x
+- pip
+
+## Créditos
+
+Este programa foi criado por [Pedro Salomão](https://github.com/pedrosalomaodw/pokesil).
 
 
 
