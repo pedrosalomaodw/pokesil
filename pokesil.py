@@ -49,16 +49,16 @@ def reiniciar_programa():
 
 try:
     os.system('cls' if os.name == 'nt' else 'clear')  # Limpa a tela do console
-# Define a cor verde para o texto
-print("\033[1;32;40mPPPPPPP      OOOOO     K     K       EEEEEEEEEE     SSSSSSSSS      IIIIIII     L")
-print("P      P    O     O    K    K        E              S                 I        L")
-print("P      P    O     O    K   K         E              S                 I        L")
-print("PPPPPPP     O     O    KKKK          EEEEEEEEEE     SSSSSSSSS         I        L")
-print("P           O     O    K   K         E                       S        I        L")
-print("P           O     O    K    K        E                       S        I        L")
-print("P            OOOOO     K     K       EEEEEEEEEE     SSSSSSSSSS     IIIIIII     LLLLLLLL")
-# Restaura a cor padrão do texto
-print("\033[0;37;40m")
+    # Define a cor verde para o texto
+    print("\033[1;32;40mPPPPPPP      OOOOO     K     K       EEEEEEEEEE     SSSSSSSSS      IIIIIII     L")
+    print("P      P    O     O    K    K        E              S                 I        L")
+    print("P      P    O     O    K   K         E              S                 I        L")
+    print("PPPPPPP     O     O    KKKK          EEEEEEEEEE     SSSSSSSSS         I        L")
+    print("P           O     O    K   K         E                       S        I        L")
+    print("P           O     O    K    K        E                       S        I        L")
+    print("P            OOOOO     K     K       EEEEEEEEEE     SSSSSSSSSS     IIIIIII     LLLLLLLL")
+    # Restaura a cor padrão do texto
+    print("\033[0;37;40m")
     print("\nPokeSil: https://github.com/pedrosalomaodw/pokesil/")
 
     while True:
