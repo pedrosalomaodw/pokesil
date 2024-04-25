@@ -1,95 +1,109 @@
-import openai
 import os
+import requests
 
-LOG_FILE = "feedback_log.txt"
-API_KEY_FILE = "api_key.txt"
+class PokeDados:
 
-def load_api_key():
-    if os.path.exists(API_KEY_FILE):
-        with open(API_KEY_FILE, "r") as file:
-            return file.read().strip()
-    else:
-        return None
+    def __init__(self, nome_pokemon):
+        self.nome_pokemon = nome_pokemon
+        self.api_url = f"https://pokeapi.co/api/v2/pokemon/{self.nome_pokemon.lower()}"
 
-def save_api_key(api_key):
-    with open(API_KEY_FILE, "w") as file:
-        file.write(api_key)
+    def obter_dados_pokemon(self):
+        try:
+            response = requests.get(self.api_url)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            print(f"Erro ao obter dados do Pokémon: {e}")
+            return None
 
-def load_feedback_log():
-    if os.path.exists(LOG_FILE):
-        with open(LOG_FILE, "r") as file:
-            return file.readlines()
-    else:
-        return []
+    def habilidades(self, pokemon_data):
+        if pokemon_data:
+            abilities = [ability['ability']['name'] for ability in pokemon_data.get("abilities", [])]
+            print("Habilidades:")
+            for ability in abilities:
+                print("-", ability)
+        else:
+            print("Não foi possível obter as habilidades do Pokémon.")
 
-def save_feedback_log(log_entries):
-    with open(LOG_FILE, "w") as file:
-        file.writelines(log_entries)
+    def altura(self, pokemon_data):
+        if pokemon_data:
+            print("Altura:", pokemon_data.get("height") / 10, "metros")
+        else:
+            print("Não foi possível obter a altura do Pokémon.")
 
-def get_response(user_input, engine):
-    api_key = load_api_key()
-    if not api_key:
-        raise ValueError("Chave de API não encontrada. Execute o main.py para inserir a chave de API.")
+    def peso(self, pokemon_data):
+        if pokemon_data:
+            print("Peso:", pokemon_data.get("weight") / 10, "quilogramas")
+        else:
+            print("Não foi possível obter o peso do Pokémon.")
+    
+    def id_pokemon(self, pokemon_data):
+        if pokemon_data:
+            print("ID do Pokémon:", pokemon_data.get("id"))
+            return pokemon_data.get("id")
+        else:
+            print("Não foi possível obter o ID do Pokémon.")
+            return None
 
-    openai.api_key = api_key
-    # Implemente o código para chamar a API do OpenAI e obter a resposta
-    return "Esta é uma resposta de exemplo do ELI."
+    def tipo(self, pokemon_data):
+        if pokemon_data:
+            types = [type_info['type']['name'] for type_info in pokemon_data.get("types", [])]
+            print("Tipo(s):", ", ".join(types))
+        else:
+            print("Não foi possível obter o tipo do Pokémon.")
 
-def provide_feedback(response, feedback):
-    api_key = load_api_key()
-    if not api_key:
-        raise ValueError("Chave de API não encontrada. Execute o main.py para inserir a chave de API.")
+    def salvar_info_arquivo(self, pokemon_data):
+        if pokemon_data:
+            nome_arquivo = f"{self.nome_pokemon.lower()}.txt"
+            try:
+                with open(nome_arquivo, "w") as arquivo:
+                    arquivo.write(f"Nome do Pokémon: {self.nome_pokemon}\n")
+                    self.habilidades(pokemon_data)
+                    self.altura(pokemon_data)
+                    self.peso(pokemon_data)
+                    self.id_pokemon(pokemon_data)
+                    self.tipo(pokemon_data)
+                print(f"As informações foram salvas no arquivo: {nome_arquivo}")
+            except IOError as e:
+                print(f"Erro ao salvar as informações do Pokémon no arquivo: {e}")
+        else:
+            print("Não foi possível salvar as informações do Pokémon.")
 
-    openai.api_key = api_key
-    if feedback in ['bom', 'ruim', 'neutro', 'excelente']:
-        # Envie feedback para a API do OpenAI
-        openai.Feedback.create(model='text-davinci-003', data=response, label=feedback)
-    else:
-        raise ValueError("Feedback inválido. Use 'bom', 'ruim', 'neutro' ou 'excelente'.")
+def reiniciar_programa():
+    reiniciar = input("Deseja reiniciar o programa? (S/s para sim, outro para não): ").lower()
+    return reiniciar == 's'
+
+def limpar_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def imprimir_banner():
+    limpar_console()
+    print("\033[1;32;40mPPPPPPP      OOOOO     K     K       EEEEEEEEEE     SSSSSSSSS      IIIIIII     L")
+    print("P      P    O     O    K    K        E              S                 I        L")
+    print("P      P    O     O    K   K         E              S                 I        L")
+    print("PPPPPPP     O     O    KKKK          EEEEEEEEEE     SSSSSSSSS         I        L")
+    print("P           O     O    K   K         E                       S        I        L")
+    print("P           O     O    K    K        E                       S        I        L")
+    print("P            OOOOO     K     K       EEEEEEEEEE     SSSSSSSSSS     IIIIIII     LLLLLLLL")
+    print("\033[0;37;40m")
+    print("\nPokeSil: https://github.com/pedrosalomaodw/pokesil/")
 
 def main():
-    print("""
-        ####################################################################
-        ##                                                                ##
-        ##           EEEEEEEEE     L             IIIIIII                  ##
-        ##           E             L                I                     ##
-        ##           E             L                I                     ##
-        ##           EEEEEEE       L                I                     ##
-        ##           E             L                I                     ##
-        ##           E             L                I                     ##
-        ##           EEEEEEEEE     LLLLLLLLLL    IIIIIII                  ##
-        ##                                                                ##
-        ####################################################################
-    """)
-    print ("""\033[1;32;40m   Bem-vindo ao ELI - Sua Assistente de Inteligência Artificial
-
-        GitHub: https://github.com/AloneUsableUser/Eli
-    """)
-    print("\033[0;37;40m")
-    print("Para enviar feedback por e-mail, envie para: codelong@proton.me")
-    feedback_log = load_feedback_log()
-
+    imprimir_banner()
     while True:
-        user_input = input("Você: ")
-        if user_input.lower() == 'sair':
-            print("Até logo!")
+        nome_pokemon = input("\nDigite o nome do Pokémon: ").lower()
+        pokemon = PokeDados(nome_pokemon)
+        pokemon_data = pokemon.obter_dados_pokemon()
+        if pokemon_data:
+            pokemon.habilidades(pokemon_data)
+            pokemon.altura(pokemon_data)
+            pokemon.peso(pokemon_data)
+            pokemon.id_pokemon(pokemon_data)
+            pokemon.tipo(pokemon_data)
+            pokemon.salvar_info_arquivo(pokemon_data)
+        if not reiniciar_programa():
             break
-
-        try:
-            response = get_response(user_input, engine="text-davinci-003")
-            print("ELI:", response)
-            
-            # Solicitar feedback do usuário
-            feedback = input("O que você achou da resposta? (bom/ruim/neutro/excelente): ").lower()
-            if feedback in ['bom', 'ruim', 'neutro', 'excelente']:
-                provide_feedback(response, feedback)
-                feedback_log.append(f"{user_input}\t{response}\t{feedback}\n")
-            else:
-                print("Feedback inválido. Use 'bom', 'ruim', 'neutro' ou 'excelente'.")
-        except Exception as e:
-            print("Erro ao obter resposta:", e)
-
-    save_feedback_log(feedback_log)
 
 if __name__ == "__main__":
     main()
+
